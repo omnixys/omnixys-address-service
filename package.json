@@ -1,5 +1,5 @@
 {
-  "name": "omnixys-address-service",
+  "name": "address-service",
   "version": "1.2.0",
   "description": "Omnixys Address Service",
   "author": {
@@ -9,10 +9,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/omnixys/omnixys-address-service.git"
+    "url": "https://github.com/omnixys/address-service.git"
   },
   "bugs": {
-    "url": "https://github.com/omnixys/omnixys-address-service/issues"
+    "url": "https://github.com/omnixys/address-service/issues"
   },
   "homepage": "https://omnixys.com",
   "license": "GPL-3.0-or-later",

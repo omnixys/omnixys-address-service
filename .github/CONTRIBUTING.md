@@ -9,8 +9,8 @@ This document defines our contribution workflow, coding standards, and pull requ
 
 1. **Fork and clone** the repository  
    ```bash
-   git clone https://github.com/your-username/omnixys-address-service.git
-   cd omnixys-address-service
+   git clone https://github.com/your-username/address-service.git
+   cd address-service
    ```
 
 2. **Install dependencies**

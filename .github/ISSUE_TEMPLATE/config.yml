@@ -15,7 +15,7 @@
 
 contact_links:
   - name: 🔐 Address Service Docs
-    url: https://github.com/omnixys/omnixys-address-service#readme
+    url: https://github.com/omnixys/address-service#readme
     about: Read the documentation before creating an issue.
   - name: 💬 Omnixys Discussion Board
     url: https://github.com/orgs/omnixys/discussions

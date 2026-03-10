@@ -37,7 +37,7 @@ jobs:
 
       - name: 🔁 Switch git remote to SSH
         run: |
-          git remote set-url origin git@github.com:omnixys/omnixys-user-service.git
+          git remote set-url origin git@github.com:omnixys/address-service.git
           git config user.name "omnixys-release-bot"
           git config user.email "release@omnixys.com"
 

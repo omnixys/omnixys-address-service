@@ -167,8 +167,8 @@ This release includes stability improvements, bug fixes, and internal refinement
 
 ---
 
-📦 **Service:** Omnixys User Service  
-🔗 **Repository:** https://github.com/omnixys/omnixys-user-service  
+📦 **Service:** Omnixys Address Service  
+🔗 **Repository:** https://github.com/omnixys/address-service  
 🧭 **Docs:** https://omnixys.com/docs
 `,
       },

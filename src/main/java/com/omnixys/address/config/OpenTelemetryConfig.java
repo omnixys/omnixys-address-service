@@ -10,7 +10,7 @@ public class OpenTelemetryConfig {
 
     @Bean
     public Tracer otelTracer() {
-        return GlobalOpenTelemetry.getTracer("omnixys-address-service");
+        return GlobalOpenTelemetry.getTracer("address-service");
     }
 
 }
