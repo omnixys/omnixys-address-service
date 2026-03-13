@@ -26,7 +26,7 @@ variable "APP_NAME" {
 
 # Automatically use today's date (YYYY-MM-DD) as version tag
 variable "APP_VERSION" {
-  default = "1.0.0"
+  default = "dev"
 }
 
 variable "JAVA_VERSION" {
@@ -53,6 +53,10 @@ target "build" {
   dockerfile = "./Dockerfile"
   context = "."
 
+    secret = [
+    "id=omnixys_token,src=.secrets/omnixys_token"
+  ]
+
   args = {
     JAVA_VERSION = "${JAVA_VERSION}"
     APP_NAME     = "${APP_NAME}"
@@ -62,18 +66,17 @@ target "build" {
   }
 
   labels = {
-    "org.opencontainers.image.title"         = "omnixys-${APP_NAME}-service"
+    "org.opencontainers.image.title"         = "${APP_NAME}-service"
     "org.opencontainers.image.version"       = "${APP_VERSION}"
     "org.opencontainers.image.created"       = "${CREATED}"
     "org.opencontainers.image.revision"      = "${REVISION}"
-    "org.opencontainers.image.source"        = "https://github.com/omnixys/omnixys-${APP_NAME}-service"
+    "org.opencontainers.image.source"        = "https://github.com/omnixys/${APP_NAME}-service"
     "org.opencontainers.image.licenses"      = "GPL-3.0-or-later"
     "org.opencontainers.image.vendor"        = "omnixys"
     "org.opencontainers.image.authors"       = "caleb.gyamfi@omnixys.com"
   }
 
   tags = [
-    "omnixys/${APP_NAME}-service:latest",
     "omnixys/${APP_NAME}-service:${APP_VERSION}"
   ]
 
