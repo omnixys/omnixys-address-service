@@ -228,26 +228,6 @@ jobs:
 
       - run: grep -m1 "<version>" pom.xml
 
-      - name: ☕ Setup Java
-        uses: actions/setup-java@v4
-        with:
-          distribution: zulu
-          java-version: ${{ matrix.java-version }}
-
-      - name: DEBUG Maven
-        run: |
-          mvn help:evaluate \
-            -Dexpression=project.version \
-            -DforceStdout \
-            -e \
-            -X
-
-      - name: 📦 Extract version
-        run: |
-          VERSION=$(mvn help:evaluate -Dexpression=project.version -e -X -DforceStdout)
-          echo "CURRENT_VERSION=$VERSION" >> $GITHUB_ENV
-          echo "CURRENT_DATE=$(date -u +'%Y-%m-%d')" >> $GITHUB_ENV
-
       - name: 🔐 Configure Maven settings.xml
         run: |
           mkdir -p ~/.m2
@@ -259,37 +239,37 @@ jobs:
                      <username>${GPR_USER}</username>
                         <password>${GPR_KEY}</password>
                  </server>
-             
+          
                      <server>
                      <id>github-starter</id>
                      <username>${GPR_USER}</username>
                         <password>${GPR_KEY}</password>
                  </server>
-             
+          
                          <server>
                      <id>github-bom</id>
                      <username>${GPR_USER}</username>
                         <password>${GPR_KEY}</password>
                  </server>
-             
+          
                      <server>
                    <id>github-observability</id>
                      <username>${GPR_USER}</username>
                         <password>${GPR_KEY}</password>
                  </server>
-             
+          
                  <server>
                    <id>github-kafka</id>
                      <username>${GPR_USER}</username>
                         <password>${GPR_KEY}</password>
                  </server>
-             
+          
                  <server>
                    <id>github-logger</id>
                      <username>${GPR_USER}</username>
                         <password>${GPR_KEY}</password>
                  </server>
-             
+          
                  <server>
                    <id>github-bom</id>
                      <username>${GPR_USER}</username>
@@ -301,6 +281,18 @@ jobs:
         env:
           GPR_USER: ${{ github.actor }}
           GPR_KEY: ${{ secrets.OMNIXYS_TOKEN }}
+
+      - name: ☕ Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: zulu
+          java-version: ${{ matrix.java-version }}
+
+      - name: 📦 Extract version
+        run: |
+          VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
+          echo "CURRENT_VERSION=$VERSION" >> $GITHUB_ENV
+          echo "CURRENT_DATE=$(date -u +'%Y-%m-%d')" >> $GITHUB_ENV
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -357,6 +349,7 @@ jobs:
           cosign sign --yes --recursive ${{ env.IMAGE_NAME }}:latest
 
 
+
   push-github:
     name: 🐳 Build & Push Multi-Arch Images (Github)
     runs-on: ubuntu-latest
@@ -379,18 +372,6 @@ jobs:
 
       - run: grep -m1 "<version>" pom.xml
 
-      - name: ☕ Setup Java
-        uses: actions/setup-java@v4
-        with:
-          distribution: zulu
-          java-version: ${{ matrix.java-version }}
-
-      - name: 📦 Extract version
-        run: |
-          VERSION=$(mvn help:evaluate -Dexpression=project.version -e -X -DforceStdout)
-          echo "CURRENT_VERSION=$VERSION" >> $GITHUB_ENV
-          echo "CURRENT_DATE=$(date -u +'%Y-%m-%d')" >> $GITHUB_ENV
-
       - name: 🔐 Configure Maven settings.xml
         run: |
           mkdir -p ~/.m2
@@ -399,40 +380,40 @@ jobs:
              <servers>
                  <server>
                      <id>github</id>
-                        <username>${GPR_USER}</username>
+                     <username>${GPR_USER}</username>
                         <password>${GPR_KEY}</password>
                  </server>
-             
+          
                      <server>
                      <id>github-starter</id>
-                        <username>${GPR_USER}</username>
+                     <username>${GPR_USER}</username>
                         <password>${GPR_KEY}</password>
                  </server>
-             
+          
                          <server>
                      <id>github-bom</id>
                      <username>${GPR_USER}</username>
                         <password>${GPR_KEY}</password>
                  </server>
-             
+          
                      <server>
                    <id>github-observability</id>
                      <username>${GPR_USER}</username>
                         <password>${GPR_KEY}</password>
                  </server>
-             
+          
                  <server>
                    <id>github-kafka</id>
                      <username>${GPR_USER}</username>
                         <password>${GPR_KEY}</password>
                  </server>
-             
+          
                  <server>
                    <id>github-logger</id>
                      <username>${GPR_USER}</username>
                         <password>${GPR_KEY}</password>
                  </server>
-             
+          
                  <server>
                    <id>github-bom</id>
                      <username>${GPR_USER}</username>
@@ -444,6 +425,18 @@ jobs:
         env:
           GPR_USER: ${{ github.actor }}
           GPR_KEY: ${{ secrets.OMNIXYS_TOKEN }}
+
+      - name: ☕ Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: zulu
+          java-version: ${{ matrix.java-version }}
+
+      - name: 📦 Extract version
+        run: |
+          VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
+          echo "CURRENT_VERSION=$VERSION" >> $GITHUB_ENV
+          echo "CURRENT_DATE=$(date -u +'%Y-%m-%d')" >> $GITHUB_ENV
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
