@@ -236,7 +236,7 @@ jobs:
 
       - name: 📦 Extract version
         run: |
-          VERSION=$(mvn help:evaluate -Dexpression=project.version -e -x -DforceStdout)
+          VERSION=$(mvn help:evaluate -Dexpression=project.version -e -X -DforceStdout)
           echo "CURRENT_VERSION=$VERSION" >> $GITHUB_ENV
           echo "CURRENT_DATE=$(date -u +'%Y-%m-%d')" >> $GITHUB_ENV
 
@@ -379,7 +379,7 @@ jobs:
 
       - name: 📦 Extract version
         run: |
-          VERSION=$(mvn help:evaluate -Dexpression=project.version -e -x -DforceStdout)
+          VERSION=$(mvn help:evaluate -Dexpression=project.version -e -X -DforceStdout)
           echo "CURRENT_VERSION=$VERSION" >> $GITHUB_ENV
           echo "CURRENT_DATE=$(date -u +'%Y-%m-%d')" >> $GITHUB_ENV
 
