@@ -276,6 +276,14 @@ jobs:
           GPR_USER: ${{ github.actor }}
           GPR_KEY: ${{ secrets.OMNIXYS_TOKEN }}
 
+      - name: DEBUG Maven
+        run: |
+          mvn help:evaluate \
+            -Dexpression=project.version \
+            -DforceStdout \
+            -e \
+            -X
+   
 
       - run: |
           git fetch origin main
