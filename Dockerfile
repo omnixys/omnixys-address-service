@@ -12,6 +12,50 @@ ARG APP_VERSION
 
 WORKDIR /source
 
+# 🔐 Inject Maven credentials
+RUN --mount=type=secret,id=gpr_user \
+    --mount=type=secret,id=gpr_key \
+    mkdir -p /root/.m2 && \
+    echo "<settings>
+                   <servers>
+                       <server>
+                           <id>github</id>
+                           <username>${GPR_USER}</username>
+                           <password>${GPR_KEY}</password>
+                       </server>
+
+                       <server>
+                           <id>github-starter</id>
+                           <username>${GPR_USER}</username>
+                           <password>${GPR_KEY}</password>
+                       </server>
+
+                       <server>
+                           <id>github-bom</id>
+                           <username>${GPR_USER}</username>
+                           <password>${GPR_KEY}</password>
+                       </server>
+
+                        <server>
+                         <id>github-observability</id>
+                           <username>${GPR_USER}</username>
+                           <password>${GPR_KEY}</password>
+                       </server>
+
+                       <server>
+                         <id>github-kafka</id>
+                           <username>${GPR_USER}</username>
+                           <password>${GPR_KEY}</password>
+                       </server>
+
+                       <server>
+                         <id>github-logger</id>
+                         <username>${GPR_USER}</username>
+                         <password>${GPR_KEY}</password>
+                       </server>
+                   </servers>
+                </settings>" > /root/.m2/settings.xml
+
 # Copy Maven wrapper + build descriptors first for better layer caching
 COPY mvnw pom.xml ./
 COPY .mvn ./.mvn
