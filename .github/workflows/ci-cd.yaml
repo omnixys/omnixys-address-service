@@ -24,7 +24,6 @@ env:
   IMAGE_NAME: ${{ secrets.DOCKER_USER }}/${{ vars.SERVICE }}-service
   IMAGE_NAME_REPOSITORY: ghcr.io/${{ github.repository }}
   SERVICE: ${{ vars.SERVICE }}
-  CURRENT_VERSION: ${{ vars.CURRENT_VERSION }}
 
 jobs:
   ci:
@@ -198,7 +197,34 @@ jobs:
             echo "released=false" >> $GITHUB_OUTPUT
           fi
 
+      - name: Read version
+        id: version
+        run: |
+          VERSION=$(grep -m1 "<version>" pom.xml | sed -E 's/.*<version>(.*)<\/version>.*/\1/')
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "CURRENT_DATE=$(date -u +'%Y-%m-%d')" >> $GITHUB_ENV
+
+      - name: Update repo variable
+        env:
+          GH_TOKEN: ${{ secrets.OMNIXYS_TOKEN }}
+        run: |
+          gh variable set CURRENT_VERSION \
+            --body "$CURRENT_VERSION" \
+            --repo omnixys/${{ vars.SERVICE }}-service
+
+      - name: Update org variable
+        env:
+          GH_TOKEN: ${{ secrets.OMNIXYS_TOKEN }}
+        run: |
+          gh variable set CURRENT_DATE \
+            --body "$CURRENT_DATE" \
+            --org omnixys \
+            --visibility all
+
+
   push-docker:
+    env:
+      CURRENT_VERSION: ${{ needs.release.outputs.version }}
     name: 🐳 Build & Push Multi-Arch Images (Docker)
     runs-on: ubuntu-latest
 
@@ -274,12 +300,6 @@ jobs:
           distribution: zulu
           java-version: ${{ matrix.java-version }}
 
-      - name: 📦 Extract version
-        run: |
-          VERSION=$(grep -m1 "<version>" pom.xml | sed -E 's/.*<version>(.*)<\/version>.*/\1/')
-          echo "CURRENT_VERSION=$VERSION" >> $GITHUB_ENV
-          echo "CURRENT_DATE=$(date -u +'%Y-%m-%d')" >> $GITHUB_ENV
-
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
         with:
@@ -337,6 +357,8 @@ jobs:
 
 
   push-github:
+    env:
+      CURRENT_VERSION: ${{ needs.release.outputs.version }}
     name: 🐳 Build & Push Multi-Arch Images (Github)
     runs-on: ubuntu-latest
 
