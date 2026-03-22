@@ -218,8 +218,15 @@ jobs:
         java-version: [25]
 
     steps:
-      - name: 🧾 Checkout repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - run: |
+          git fetch origin main
+          git checkout origin/main
+
+      - run: grep -m1 "<version>" pom.xml
 
       - name: ☕ Setup Java
         uses: actions/setup-java@v4
@@ -354,8 +361,15 @@ jobs:
         java-version: [25]
 
     steps:
-      - name: 🧾 Checkout repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - run: |
+          git fetch origin main
+          git checkout origin/main
+
+      - run: grep -m1 "<version>" pom.xml
 
       - name: ☕ Setup Java
         uses: actions/setup-java@v4
