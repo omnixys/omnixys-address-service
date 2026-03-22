@@ -94,11 +94,7 @@ jobs:
                         <password>${GPR_KEY}</password>
                  </server>
              
-                 <server>
-                   <id>github-bom</id>
-                     <username>${GPR_USER}</username>
-                        <password>${GPR_KEY}</password>
-                 </server>
+
              </servers>
           </settings>
           EOF
@@ -181,11 +177,7 @@ jobs:
                         <password>${GPR_KEY}</password>
                  </server>
              
-                 <server>
-                   <id>github-bom</id>
-                     <username>${GPR_USER}</username>
-                        <password>${GPR_KEY}</password>
-                 </server>
+
              </servers>
           </settings>
           EOF
@@ -264,11 +256,7 @@ jobs:
                         <password>${GPR_KEY}</password>
                  </server>
           
-                 <server>
-                   <id>github-bom</id>
-                     <username>${GPR_USER}</username>
-                        <password>${GPR_KEY}</password>
-                 </server>
+
              </servers>
           </settings>
           EOF
@@ -417,11 +405,7 @@ jobs:
                         <password>${GPR_KEY}</password>
                  </server>
           
-                 <server>
-                   <id>github-bom</id>
-                     <username>${GPR_USER}</username>
-                        <password>${GPR_KEY}</password>
-                 </server>
+
              </servers>
           </settings>
           EOF
