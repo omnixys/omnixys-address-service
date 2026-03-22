@@ -234,6 +234,14 @@ jobs:
           distribution: zulu
           java-version: ${{ matrix.java-version }}
 
+      - name: DEBUG Maven
+        run: |
+          mvn help:evaluate \
+            -Dexpression=project.version \
+            -DforceStdout \
+            -e \
+            -X
+
       - name: 📦 Extract version
         run: |
           VERSION=$(mvn help:evaluate -Dexpression=project.version -e -X -DforceStdout)
