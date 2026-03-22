@@ -207,7 +207,9 @@ jobs:
       - name: Update repo variable
         env:
           GH_TOKEN: ${{ secrets.OMNIXYS_TOKEN }}
+          CURRENT_VERSION: ${{ env.CURRENT_VERSION }}
         run: |
+          echo "DEBUG VERSION=$CURRENT_VERSION"
           gh variable set CURRENT_VERSION \
             --body "$CURRENT_VERSION" \
             --repo omnixys/${{ vars.SERVICE }}-service
