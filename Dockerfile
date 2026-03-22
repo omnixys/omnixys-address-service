@@ -12,49 +12,44 @@ ARG APP_VERSION
 
 WORKDIR /source
 
-# 🔐 Inject Maven credentials
 RUN --mount=type=secret,id=gpr_user \
     --mount=type=secret,id=gpr_key \
-    mkdir -p /root/.m2 && \
-    echo "<settings>
-                   <servers>
-                       <server>
-                           <id>github</id>
-                           <username>${GPR_USER}</username>
-                           <password>${GPR_KEY}</password>
-                       </server>
-
-                       <server>
-                           <id>github-starter</id>
-                           <username>${GPR_USER}</username>
-                           <password>${GPR_KEY}</password>
-                       </server>
-
-                       <server>
-                           <id>github-bom</id>
-                           <username>${GPR_USER}</username>
-                           <password>${GPR_KEY}</password>
-                       </server>
-
-                        <server>
-                         <id>github-observability</id>
-                           <username>${GPR_USER}</username>
-                           <password>${GPR_KEY}</password>
-                       </server>
-
-                       <server>
-                         <id>github-kafka</id>
-                           <username>${GPR_USER}</username>
-                           <password>${GPR_KEY}</password>
-                       </server>
-
-                       <server>
-                         <id>github-logger</id>
-                         <username>${GPR_USER}</username>
-                         <password>${GPR_KEY}</password>
-                       </server>
-                   </servers>
-                </settings>" > /root/.m2/settings.xml
+    bash -c 'mkdir -p /root/.m2 && cat <<EOF > /root/.m2/settings.xml
+<settings>
+    <servers>
+        <server>
+            <id>github</id>
+            <username>$(cat /run/secrets/gpr_user)</username>
+            <password>$(cat /run/secrets/gpr_key)</password>
+        </server>
+        <server>
+            <id>github-starter</id>
+            <username>$(cat /run/secrets/gpr_user)</username>
+            <password>$(cat /run/secrets/gpr_key)</password>
+        </server>
+        <server>
+            <id>github-bom</id>
+            <username>$(cat /run/secrets/gpr_user)</username>
+            <password>$(cat /run/secrets/gpr_key)</password>
+        </server>
+         <server>
+          <id>github-observability</id>
+            <username>$(cat /run/secrets/gpr_user)</username>
+            <password>$(cat /run/secrets/gpr_key)</password>
+        </server>
+        <server>
+          <id>github-kafka</id>
+            <username>$(cat /run/secrets/gpr_user)</username>
+            <password>$(cat /run/secrets/gpr_key)</password>
+        </server>
+        <server>
+          <id>github-logger</id>
+          <username>$(cat /run/secrets/gpr_user)</username>
+          <password>$(cat /run/secrets/gpr_key)</password>
+        </server>
+    </servers>
+</settings>
+EOF'
 
 # Copy Maven wrapper + build descriptors first for better layer caching
 COPY mvnw pom.xml ./
@@ -125,3 +120,4 @@ HEALTHCHECK --interval=30s --timeout=3s --retries=1 \
 
 # Start Spring Boot über Spring Boot Launcher (Layer-Modus)
 ENTRYPOINT ["dumb-init", "java", "--enable-preview", "org.springframework.boot.loader.launch.JarLauncher"]
+
