@@ -3,6 +3,16 @@
 All notable changes in this project will be documented in this file.
 
 
+## [3.0.1](https://github.com/omnixys/address-service/compare/v3.0.0...v3.0.1) (2026-03-26)
+
+### Dockerfile
+
+* **Dockerfile:** Dockerfile: remove extra Maven servers; use wget ([](https://github.com/omnixys/address-service/commit/2ad6a8c2ba8922fb6af3bb3d1c037e90b91c1b68))
+
+### Other
+
+* **Other:** Merge branch 'main' of https://github.com/omnixys/address-service ([](https://github.com/omnixys/address-service/commit/a86e75f29aa293e2f653113d484806fb01597562))
+
 ## [3.0.0](https://github.com/omnixys/address-service/compare/v2.0.18...v3.0.0) (2026-03-26)
 
 ### Address
