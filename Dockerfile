@@ -85,7 +85,7 @@ LABEL org.opencontainers.image.title="${APP_NAME}-service" \
 WORKDIR /workspace
 
 RUN apt-get update && \
-    apt-get install --no-install-recommends --yes dumb-init=1.2.5-2 wget && \
+    apt-get install --no-install-recommends --yes dumb-init wget && \
     apt-get autoremove -y && \
     apt-get clean -y && \
     rm -rf /var/lib/apt/lists/* /tmp/*
@@ -96,7 +96,7 @@ ENV OTEL_AGENT_PATH=/otel/opentelemetry-javaagent.jar
 ENV OTEL_SERVICE_NAME=${APP_NAME}-service
 ENV OTEL_EXPORTER_OTLP_ENDPOINT=http://otel-collector:4317
 ENV OTEL_EXPORTER_OTLP_PROTOCOL=grpc
-ENV OTEL_RESOURCE_ATTRIBUTES=service.version=1.0.0,service.namespace=omnixys
+ENV OTEL_RESOURCE_ATTRIBUTES=service.version=${APP_VERSION},service.namespace=omnixys
 ENV OTEL_LOGS_EXPORTER=otlp
 ENV OTEL_METRICS_EXPORTER=otlp
 ENV OTEL_TRACES_EXPORTER=otlp

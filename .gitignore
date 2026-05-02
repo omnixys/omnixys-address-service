@@ -413,3 +413,5 @@ zookeeper-data/
 .extras/*.{png,jpeg,gif,mp4,mpeg,mkv,avi,ogg,webm}
 
 .secrets
+opentelemetry-javaagent.jar
+tmp
